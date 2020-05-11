@@ -9,9 +9,9 @@ class DOMHelper {
     const element = document.getElementById(elementId);
     const destinationElement = document.querySelector(newDestinationSelector);
     destinationElement.append(element);
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 }
-
 
 class Component {
   constructor(hostElementId, insertBefore = false) {
@@ -38,7 +38,6 @@ class Component {
   }
 }
 
-
 class Tooltip extends Component {
   constructor(closeNotifierFunction, text, hostElementId) {
     super(hostElementId);
@@ -59,6 +58,7 @@ class Tooltip extends Component {
     const tooltipBody = document.importNode(tooltipTemplate.content, true);
     tooltipBody.querySelector('p').textContent = this.text;
     tooltipElement.append(tooltipBody);
+
     const hostElPosLeft = this.hostElement.offsetLeft;
     const hostElPosTop = this.hostElement.offsetTop;
     const hostElHeight = this.hostElement.clientHeight;
@@ -76,7 +76,6 @@ class Tooltip extends Component {
   }
 }
 
-
 class ProjectItem {
   hasActiveTooltip = false;
 
@@ -85,6 +84,7 @@ class ProjectItem {
     this.updateProjectListsHandler = updateProjectListsFunction;
     this.connectMoreInfoButton();
     this.connectSwitchButton(type);
+    this.connectDrag();
   }
 
   showMoreInfoHandler() {
@@ -102,6 +102,16 @@ class ProjectItem {
     );
     tooltip.attach();
     this.hasActiveTooltip = true;
+  }
+
+  connectDrag() {
+    document.getElementById(this.id).addEventListener(
+      'dragstart',
+      event => {
+        event.dataTransfer.setData("text/plain", this.id);
+        event.dataTransfer.effectAllowed = 'move';
+      }
+    )
   }
 
   connectMoreInfoButton() {
@@ -128,7 +138,6 @@ class ProjectItem {
     this.connectSwitchButton(type);
   }
 }
-
 
 class ProjectList {
   projects = [];
@@ -162,7 +171,6 @@ class ProjectList {
   }
 }
 
-
 class App {
   static init() {
     const activeProjectsList = new ProjectList('active');
@@ -173,16 +181,7 @@ class App {
     finishedProjectsList.setSwitchHandlerFunction(
       activeProjectsList.addProject.bind(activeProjectsList)
     );
-    const timerId = setTimeout(this.startAnalytics, 3000);
-    clearTimeout(timerId);
-  }
-  static startAnalytics() {
-    const analyticsScript = document.createElement('script');
-    analyticsScript.src = 'assets/scripts/analytics.js';
-    analyticsScript.defer = true;
-    document.head.append(analyticsScript);
   }
 }
-
 
 App.init();
