@@ -81,10 +81,41 @@ class ProjectItem {
 
   constructor(id, updateProjectListsFunction, type) {
     this.id = id;
+    this.type = type;
     this.updateProjectListsHandler = updateProjectListsFunction;
     this.connectMoreInfoButton();
     this.connectSwitchButton(type);
     this.connectDrag();
+    this.connectDropable();
+  }
+
+  connectDropable() {
+    const list = document.querySelector(`#${this.type}-projects ul`);
+    list.addEventListener(
+      'dragenter',
+      event => {
+        if(event.dataTransfer.types[0] === "text/plain") {
+          event.preventDefault();
+        }
+        list.parentElement.classList.add('droppable');
+      }
+    )
+    list.addEventListener(
+      'dragover',
+      event => {
+        if(event.dataTransfer.types[0] === "text/plain") {
+          event.preventDefault();
+        }
+      }
+    )
+    list.addEventListener(
+      'dragLeave',
+      event => {
+        if(event.relatedTarget.closest(`#${this.type}-projects ul`) !== list) {
+          list.parentElement.classList.remove('droppable');
+        }
+      }
+    )
   }
 
   showMoreInfoHandler() {
