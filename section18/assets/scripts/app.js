@@ -9,10 +9,8 @@ function sendHttpRequest(method, url, data) {
     url,
     {
       method: method,
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      }
+      // body: JSON.stringify(data),
+      body: data,
     }
   ).then(response => {
     if(response.status >= 200 && response.status < 300) {
@@ -76,10 +74,15 @@ async function createPost(title, content) {
     userId: userId
   };
 
+  const formData = new FormData(form);
+  // formData.append('title', title);
+  // formData.append('body', content);
+  formData.append('userId', userId);
+
   sendHttpRequest(
     'POST',
     'https://jsonplaceholder.typicode.com/posts',
-    post
+    formData,
   )
 }
 
