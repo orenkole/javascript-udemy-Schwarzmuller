@@ -9,35 +9,52 @@ function sendHttpRequest(method, url, data) {
     url,
     {
       method: method,
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      }
     }
   ).then(response => {
-    return response.json();
-  });
+    if(response.status >= 200 && response.status < 300) {
+      response.json();
+    } else {
+      return response.json().then(
+        errData => {
+          console.log(errData);
+          throw new Error(errData);
+        }
+      );
+    }
+  })
+  .catch(
+    error => console.log(error)
+  );
   // const promise = new Promise((resolve, reject) => {
-    // const xhr = new XMLHttpRequest();
-    // xhr.open(method, url);
-    // xhr.responseType = 'json';
-    // xhr.onload = function() {
-    //   if(xhr.status >= 200 && xhr.status < 300) {
-    //     resolve(xhr.response);
-    //   } else {
-    //     reject(new Error('Something went wrong'))
-    //   }
-    // }
-    // xhr.onerror = function() {
-    //   reject(new Error('Failed to send request'))
-    // }
-    // xhr.send(JSON.stringify(data));
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.setRequestHeader('Content-Type', 'application/json')
+  //   xhr.open(method, url);
+  //   xhr.responseType = 'json';
+  //   xhr.onload = function() {
+  //     if(xhr.status >= 200 && xhr.status < 300) {
+  //       resolve(xhr.response);
+  //     } else {
+  //       xhr.response; // here we have access to response
+  //       reject(new Error('Something went wrong'))
+  //     }
+  //   }
+  //   xhr.onerror = function() {
+  //     reject(new Error('Failed to send request'))
+  //   }
+  //   xhr.send(JSON.stringify(data));
   // })
   // return promise;
 }
 
 async function fetchPosts() {
-  try {
+  // try {
     const responseData = await sendHttpRequest(
       'GET',
-      'https://jsonplaceholder.typicode.com/posts'
+      'https://jsonplaceholder.typicode.com/pos'
     )
     for(const post of responseData) {
       const postEl = document.importNode(postTemplate.content, true);
@@ -46,9 +63,9 @@ async function fetchPosts() {
       postEl.querySelector('li').id = post.id;
       listElement.append(postEl);
     }
-  } catch(err) {
-    alert(err);
-  }
+  // } catch(err) {
+  //  alert(err);
+  // }
 }
 
 async function createPost(title, content) {
@@ -57,7 +74,8 @@ async function createPost(title, content) {
     title: title,
     body: content,
     userId: userId
-  }
+  };
+
   sendHttpRequest(
     'POST',
     'https://jsonplaceholder.typicode.com/posts',
