@@ -4,7 +4,16 @@ const form = document.querySelector('#new-post form');
 const fetchButton = document.querySelector('#available-posts button');
 const postList = document.querySelector('ul');
 
-function sendHttpRequest(url) {
+function sendHttpRequest(method, url, data) {
+  return fetch(
+    url,
+    {
+      method: method,
+      body: JSON.stringify(data)
+    }
+  ).then(response => {
+    return response.json();
+  });
   // const promise = new Promise((resolve, reject) => {
     // const xhr = new XMLHttpRequest();
     // xhr.open(method, url);
@@ -22,9 +31,6 @@ function sendHttpRequest(url) {
     // xhr.send(JSON.stringify(data));
   // })
   // return promise;
-  return fetch(url).then(response => {
-    return response.;
-  });
 }
 
 async function fetchPosts() {
