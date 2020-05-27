@@ -1,0 +1,38 @@
+{
+  "name": "practice-oop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "build:dev": "webpack-dev-server",
+    "build:prod": "webpack --config webpack.config.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orenkole/js-classes-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "browserslist": "> 2%",
+  "bugs": {
+    "url": "https://github.com/orenkole/js-classes-project/issues"
+  },
+  "homepage": "https://github.com/orenkole/js-classes-project#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "eslint": "^7.0.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "lodash": "^4.17.15",
+    "regenerator-runtime": "^0.13.5"
+  }
+}
