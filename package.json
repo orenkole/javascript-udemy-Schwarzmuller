@@ -1,38 +1,26 @@
 {
-  "name": "practice-oop",
+  "name": "my-place",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
     "build:dev": "webpack-dev-server",
+    "build": "webpack",
     "build:prod": "webpack --config webpack.config.prod.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/orenkole/js-classes-project.git"
-  },
-  "author": "",
+  "author": "Maximilian Schwarzmüller",
   "license": "ISC",
-  "browserslist": "> 2%",
-  "bugs": {
-    "url": "https://github.com/orenkole/js-classes-project/issues"
-  },
-  "homepage": "https://github.com/orenkole/js-classes-project#readme",
+  "browserslist": "> 0.5%",
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "babel-loader": "^8.1.0",
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
-    "eslint": "^7.0.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
-  },
-  "dependencies": {
-    "core-js": "^3.6.5",
-    "lodash": "^4.17.15",
-    "regenerator-runtime": "^0.13.5"
+    "core-js": "^3.2.1",
+    "regenerator-runtime": "^0.13.3",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
   }
 }
